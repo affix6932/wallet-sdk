@@ -37,14 +37,13 @@ const (
 	getNewAddrRoute  = "/v1/api/deposit/get_new_address"
 )
 
-func NewDeposit(w *sdk.WalletClient, customer, url string) *Deposit {
-	return &Deposit{w: w, customer: customer, url: url}
+func NewDeposit(w *sdk.WalletClient, url string) *Deposit {
+	return &Deposit{w: w, url: url}
 }
 
 type Deposit struct {
-	w        *sdk.WalletClient
-	customer string
-	url      string
+	w   *sdk.WalletClient
+	url string
 }
 
 func (d *Deposit) QueryDetail(ctx context.Context, req *QueryDetailReq) (*QueryDetailResp, error) {

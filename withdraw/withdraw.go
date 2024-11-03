@@ -14,9 +14,8 @@ import (
 
 type (
 	Withdraw struct {
-		w        *sdk.WalletClient
-		customer string
-		url      string
+		w   *sdk.WalletClient
+		url string
 	}
 	DoWithdrawReq struct {
 		RequestId string          `json:"requestId"`
@@ -53,8 +52,8 @@ const (
 	routeWithdraw      = "/v1/api/withdraw"
 )
 
-func NewWithdraw(w *sdk.WalletClient, customer, url string) *Withdraw {
-	return &Withdraw{w: w, customer: customer, url: url}
+func NewWithdraw(w *sdk.WalletClient, url string) *Withdraw {
+	return &Withdraw{w: w, url: url}
 }
 
 func buildReq[T *DoWithdrawReq | *QueryReq](ctx context.Context, req T, baseUrl, router string) (*http.Request, error) {
