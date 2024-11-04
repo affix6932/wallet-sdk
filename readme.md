@@ -10,6 +10,33 @@ Current support:
 | TON   | USDT |
 | TRC20 | USDT |
 
+
+resp always like:
+```go
+// resp from gateway:
+{
+    "code": 0, // from gateway. 0: success, others: failed,
+    "data": "{\"msg\":\"\",\"code\":0,\"data\":{\"chain\":\"TON\",\"hash\":\"og6hrZpiFxjsKsfRAr+CIQd\",\"address\":\"EQAkhkg79yqAqbG67Ch5m8j\",\"tag\":\"2\",\"coin\":\"USDT\",\"amount\":\"0.222222\",\"blockNo\":\"\",\"txId\":\"da2c87300d993cc924b9085af5f5183a\"}}"
+}
+
+api resp body in data:
+{
+    "msg": "",
+    "code": 0,
+    "data": {
+        "chain": "TON",
+        "hash": "og6hrZpiFxjsKsfRAr+CIQdZp",
+        "address": "EQAkhkg79yqAqbG67Ch5m8j",
+        "tag": "2",
+        "coin": "USDT",
+        "amount": "0.222222",
+        "blockNo": "",
+        "txId": "da2c87300d993cc924b9085af5f5183a"
+    }
+}
+
+```
+
 ### Deposit.GetNewAddress
 
 path: `/v1/api/deposit/get_new_address`
