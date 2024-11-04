@@ -1,4 +1,4 @@
-[sdk example](##sdk-example)
+[sdk example](#sdk-example)
 
 ## Common
 
