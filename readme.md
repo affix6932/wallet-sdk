@@ -2,24 +2,31 @@
 
 W-Broker must in header.
 
+Current support:
+
+| chain | coin |
+|-------|------|
+| TON   | TON  |
+| TON   | USDT |
+| TRC20 | USDT |
 
 ### Deposit.GetNewAddress
 
 req:
 
-| name    | type   | comment      | require |
-|---------|--------|--------------|---------|
-|requestId|string|uniq id|y|
+| name      | type   | comment | require |
+|-----------|--------|---------|---------|
+| requestId | string | uniq id | y       |
 
 resp:
 
-| name    | type   | comment      |  |
-|---------|--------|--------------|---------|
-|address|string|address|
-|tag|string|tag|
-
+| name    | type   | comment |  |
+|---------|--------|---------|--|
+| address | string | address |
+| tag     | string | tag     |
 
 ### Deposit.QueryDetail
+
 req:
 
 | name    | type   | comment      | require |
@@ -30,60 +37,57 @@ req:
 
 resp:
 
-|name|type| comment                  ||
-|---|---|--------------------------|---|
-|chain|string| chainName                ||
-|hash|string| hash from chain explorer ||
-|address|string| address                  ||
-|tag|string| tag                      ||
-|coin|string| coin, USDT/TON/...       ||
-|amount|decimal| 1.23456789               ||
-|blockNo|string| confirmCnt               ||
-|txId|string| uniqueID                 ||
+| name    | type    | comment                  | |
+|---------|---------|--------------------------|-|
+| chain   | string  | chainName                | |
+| hash    | string  | hash from chain explorer | |
+| address | string  | address                  | |
+| tag     | string  | tag                      | |
+| coin    | string  | coin, USDT/TON/...       | |
+| amount  | decimal | 1.23456789               | |
+| blockNo | string  | confirmCnt               | |
+| txId    | string  | uniqueID                 | |
 
 ### Withdraw.QueryDetail
 
 req:
 
-| name    | type   | comment      | require |
-|---------|--------|--------------|---------|
-|requestId|string|uniq id|y|
+| name      | type   | comment | require |
+|-----------|--------|---------|---------|
+| requestId | string | uniq id | y       |
 
 resp:
 
-|name| type    | comment                                ||
-|---|---------|----------------------------------------|---|
-|requestId| string  | uniq id                                |
-|amount| decimal |                                        |
-|coin| string  |                                        |
-|network| string  |                                        |
-|to| string  |                                        |
-|tag| string  |                                        |
-|hash| string  |                                        |
-|state| int     | 0: pending, 1: process, 2: succ 3:fail |
-|gas| decimal |                                        |
+| name      | type    | comment                                | |
+|-----------|---------|----------------------------------------|-|
+| requestId | string  | uniq id                                |
+| amount    | decimal |                                        |
+| coin      | string  |                                        |
+| network   | string  |                                        |
+| to        | string  |                                        |
+| tag       | string  |                                        |
+| hash      | string  |                                        |
+| state     | int     | 0: pending, 1: process, 2: succ 3:fail |
+| gas       | decimal |                                        |
 
 ### Withdraw.DoWithdraw
 
 req:
 
-| name    | type   | comment      | require |
-|---------|--------|--------------|---------|
-|requestId|string|uniq id|y|
+| name      | type   | comment | require |
+|-----------|--------|---------|---------|
+| requestId | string | uniq id | y       |
 
 resp:
 
-| name      | type    | comment ||
-|-----------|---------|---------|---|
+| name      | type    | comment | |
+|-----------|---------|---------|-|
 | requestId | string  | uniq id |
- | amount    | decimal |         |
- | coin      | string  |         |
- | network   | string  |         |
- | to        | string  |         |
- | tag       | string  |         |
-
-
-
+| amount    | decimal |         |
+| coin      | string  |         |
+| network   | string  |         |
+| to        | string  |         |
+| tag       | string  |         |
 
 ## sdk example
 
