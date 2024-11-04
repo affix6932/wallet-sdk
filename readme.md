@@ -12,6 +12,8 @@ Current support:
 
 ### Deposit.GetNewAddress
 
+path: `/v1/api/deposit/get_new_address`
+
 req:
 
 | name      | type   | comment | require |
@@ -26,6 +28,8 @@ resp:
 | tag     | string | tag     |
 
 ### Deposit.QueryDetail
+
+path: 	`/v1/api/deposit/query_detail`
 
 req:
 
@@ -50,6 +54,8 @@ resp:
 
 ### Withdraw.QueryDetail
 
+path: 	`/v1/api/withdraw/query_detail`
+
 req:
 
 | name      | type   | comment | require |
@@ -71,6 +77,7 @@ resp:
 | gas       | decimal |                                        |
 
 ### Withdraw.DoWithdraw
+path:     `/v1/api/withdraw`
 
 req:
 
