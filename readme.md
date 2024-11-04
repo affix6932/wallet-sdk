@@ -1,5 +1,8 @@
 ## Common
 
+W-Broker must in header.
+
+
 ### Deposit.GetNewAddress
 
 req:
