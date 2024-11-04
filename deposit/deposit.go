@@ -13,6 +13,9 @@ import (
 
 type (
 	QueryDetailReq struct {
+		TxId    string `json:"tx_id"`
+		Address string `json:"address"`
+		Tag     string `json:"tag"`
 	}
 
 	QueryDetailResp struct{}
