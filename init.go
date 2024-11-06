@@ -93,7 +93,7 @@ func Init(ops ...Option) (*WalletClient, error) {
 	// test mode
 	if cfg.isTest {
 		client = &http.Client{}
-		return &WalletClient{client: client, isTest: cfg.isTest}, nil
+		return &WalletClient{client: client, isTest: cfg.isTest, customer: cfg.customer}, nil
 	}
 	clientCert, caPool, err := initCert(cfg)
 	if err != nil {
@@ -107,7 +107,7 @@ func Init(ops ...Option) (*WalletClient, error) {
 
 	tr := &http.Transport{TLSClientConfig: tlsCfg, Proxy: http.ProxyFromEnvironment}
 	client = &http.Client{Transport: tr}
-	return &WalletClient{client: client, encrypt: encrypt.Init(secret), isTest: cfg.isTest}, nil
+	return &WalletClient{client: client, encrypt: encrypt.Init(secret), isTest: cfg.isTest, customer: cfg.customer}, nil
 }
 
 // use path
