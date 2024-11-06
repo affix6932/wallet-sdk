@@ -1,0 +1,31 @@
+@startuml
+autonumber
+database DB
+actor User
+group get&display address
+    User->Platform: do deposit
+    group first time
+    Platform->Wallet: get deposit address
+    Wallet-->Platform: address
+    end
+    Platform-->DB: save||get
+    Platform-->User: display address
+end
+
+group deposit
+    User->Platform: get address
+    Platform-->User: address
+    User->Addr: transfer
+    Wallet->Chains: scan addr
+    Chains-->Wallet: get deposit info
+    Wallet-->Platform: webhook callback
+    Platform->Wallet: check  transaction exists
+    alt transaction exists
+    Wallet-->Platform: transaction info
+    else not exists
+    Wallet-->Platform: null
+    end
+end
+
+
+@enduml

@@ -1,4 +1,4 @@
-module wallet-sdk
+module github.com/affix6932/wallet-sdk
 
 go 1.22.1
 

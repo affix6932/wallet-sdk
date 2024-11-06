@@ -1,0 +1,22 @@
+@startuml
+autonumber
+actor User
+participant Platform
+database DB
+User->Platform: withdraw
+Platform->DB: check balance && freeze/deduct amount
+group not enough
+DB-->Platform: not enough, cancel
+Platform-->User: withdraw failed
+end
+
+group enough
+Platform->Wallet: withdraw
+Wallet-->Platform: ok
+Wallet-->Platform: callback withdraw detail
+group detail succ
+Platform->DB: deduct amount
+else failed
+Platform->DB: unfeeze/add amount
+end
+@enduml

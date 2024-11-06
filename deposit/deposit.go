@@ -8,7 +8,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	sdk "wallet-sdk"
+	sdk "github.com/affix6932/wallet-sdk"
 )
 
 type (

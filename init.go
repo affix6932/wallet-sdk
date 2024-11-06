@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"wallet-sdk/encrypt"
+	"github.com/affix6932/wallet-sdk/encrypt"
 
 	"github.com/pkg/errors"
 )

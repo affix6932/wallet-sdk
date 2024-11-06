@@ -34,4 +34,4 @@ linters-settings:
       # A comma-separated list of prefixes, which, if set, checks import paths
       # with the given prefixes are grouped after 3rd-party packages.
       # Default: ""
-      local-prefixes: wallet-sdk
+      local-prefixes: github.com/affix6932/wallet-sdk

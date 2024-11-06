@@ -9,7 +9,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/shopspring/decimal"
 
-	sdk "wallet-sdk"
+	sdk "github.com/affix6932/wallet-sdk"
 )
 
 type (
