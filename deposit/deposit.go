@@ -68,8 +68,12 @@ func (d *Deposit) QueryDetail(ctx context.Context, req *QueryDetailReq) (*QueryD
 	if err != nil {
 		return nil, err
 	}
+	var tmp string
+	if err := json.Unmarshal(body, &tmp); err != nil {
+		return nil, err
+	}
 	var resp = &Resp[QueryDetailResp]{}
-	if err := json.Unmarshal(body, &resp); err != nil {
+	if err := json.Unmarshal([]byte(tmp), &resp); err != nil {
 		return nil, err
 	}
 	if err = getErr(resp); err != nil {
