@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/shopspring/decimal"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -18,8 +19,17 @@ type (
 		Tag     string `json:"tag"`
 	}
 
-	QueryDetailResp struct{}
-	GetNewAddrReq   struct {
+	QueryDetailResp struct {
+		Chain   string          `json:"chain"`
+		Hash    string          `json:"hash"`
+		Address string          `json:"address"`
+		Tag     string          `json:"tag"`
+		Coin    string          `json:"coin"`
+		Amount  decimal.Decimal `json:"amount"`
+		Confirm string          `json:"blockNo"`
+		TxID    string          `json:"txId"`
+	}
+	GetNewAddrReq struct {
 		Network   string `json:"network"`
 		RequestId string `json:"requestId"`
 	}
