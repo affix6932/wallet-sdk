@@ -34,7 +34,8 @@ func sign(r *http.Request, body []byte) {
 	tmp = append(tmp, ts...)
 	tmp = append(tmp, nonce...)
 
-	ns := hex.EncodeToString(sha256.New().Sum(tmp))
+	h := sha256.Sum256(tmp)
+	ns := hex.EncodeToString(h[:])
 	sb := ns[16:48]
 	r.Header.Set(Wsign, sb)
 }
