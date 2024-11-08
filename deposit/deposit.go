@@ -15,20 +15,20 @@ import (
 
 type (
 	QueryDetailReq struct {
-		TxId    string `json:"txId"`
-		Address string `json:"address"`
-		Tag     string `json:"tag"`
+		RequestId string `json:"requestId"`
+		Address   string `json:"address"`
+		Tag       string `json:"tag"`
 	}
 
 	QueryDetailResp struct {
-		Chain   string          `json:"chain"`
-		Hash    string          `json:"hash"`
-		Address string          `json:"address"`
-		Tag     string          `json:"tag"`
-		Coin    string          `json:"coin"`
-		Amount  decimal.Decimal `json:"amount"`
-		Confirm string          `json:"blockNo"`
-		TxID    string          `json:"txId"`
+		Chain     string          `json:"chain"`
+		Hash      string          `json:"hash"`
+		Address   string          `json:"address"`
+		Tag       string          `json:"tag"`
+		Coin      string          `json:"coin"`
+		Amount    decimal.Decimal `json:"amount"`
+		Confirm   string          `json:"blockNo"`
+		RequestID string          `json:"requestId"`
 	}
 	GetNewAddrReq struct {
 		Network   string `json:"network"`
