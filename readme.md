@@ -1,5 +1,8 @@
-[sdk example](#sdk-example)
+[golang sdk example](#sdk-example)
 
+[document](#common)
+
+[java sdk](#java-api)
 ```
                    ,.-^^-._          ┌─┐                                                                                                  
                   |-.____.-|         ║"│                                                                                                  
@@ -77,6 +80,7 @@
 ```
 
 withdraw
+
 ```
                       ┌─┐                                                       ,.-^^-._                
                       ║"│                                                      |-.____.-|               
@@ -144,13 +148,12 @@ Current support:
 | TON   | USDT |
 | TRC20 | USDT |
 
-
 resp always like:
+
 ```go
-// resp from gateway:
-{
-    "code": 0, // from gateway. 0: success, others: failed,
-    "data": "{\"msg\":\"\",\"code\":0,\"data\":{\"chain\":\"TON\",\"hash\":\"og6hrZpiFxjsKsfRAr+CIQd\",\"address\":\"EQAkhkg79yqAqbG67Ch5m8j\",\"tag\":\"2\",\"coin\":\"USDT\",\"amount\":\"0.222222\",\"blockNo\":\"\",\"txId\":\"da2c87300d993cc924b9085af5f5183a\"}}"
+// resp from gateway: {
+"code": 0, // from gateway. 0: success, others: failed,
+"data": "{\"msg\":\"\",\"code\":0,\"data\":{\"chain\":\"TON\",\"hash\":\"og6hrZpiFxjsKsfRAr+CIQd\",\"address\":\"EQAkhkg79yqAqbG67Ch5m8j\",\"tag\":\"2\",\"coin\":\"USDT\",\"amount\":\"0.222222\",\"blockNo\":\"\",\"txId\":\"da2c87300d993cc924b9085af5f5183a\"}}"
 }
 
 api resp body in data:
@@ -190,7 +193,7 @@ resp:
 
 ### Deposit.QueryDetail
 
-path: 	`/v1/api/deposit/query_detail`
+path:    `/v1/api/deposit/query_detail`
 
 req:
 
@@ -213,9 +216,20 @@ resp:
 | blockNo | string  | confirmCnt               | |
 | txId    | string  | uniqueID                 | |
 
+### Deposit Callback Struct
+
+| name    | type           | comment                  | |
+|---------|----------------|--------------------------|-|
+| chain   | string         | chainName                | |
+| hash    | string         | hash from chain explorer | |
+| address | string         | address                  | |
+| tag     | string         | tag                      | |
+| coin    | string         | coin, USDT/TON/...       | |
+| amount  | decimal(40,18) | 0.123456                 | |
+
 ### Withdraw.QueryDetail
 
-path: 	`/v1/api/withdraw/query_detail`
+path:    `/v1/api/withdraw/query_detail`
 
 req:
 
@@ -238,6 +252,7 @@ resp:
 | gas       | decimal |                                        |
 
 ### Withdraw.DoWithdraw
+
 path:     `/v1/api/withdraw`
 
 req:
@@ -257,24 +272,38 @@ resp:
 | to        | string  |         |
 | tag       | string  |         |
 
+### Withdraw Callback Struct
+
+| name      | type           | comment       |   |
+|-----------|----------------|---------------|---|
+| chain     | string         |               | - |
+| coin      | string         |               | - |
+| from      | string         |               | - |
+| to        | string         |               | - |
+| amount    | decimal(40,18) |               | - |
+| requestId | string         | uniq id       | - |
+| hash      | string         | hash on chain | - |
+| fee       | decimal(40,18) |               | - |
+| tag       | string         |               | - |
+
 ## sdk example
 
 ```go
     // prod
 ops := []sdk.Option{
-sdk.WithSecretPath("../test/public_key.pem"),
-sdk.WithCertPath(("../test/server/ca.crt"), ("../test/server/test_client.crt"), ("../test/server/test_client.key")),
-sdk.WithCustomer("a"),
+    sdk.WithSecretPath("../test/public_key.pem"),
+    sdk.WithCertPath(("../test/server/ca.crt"), ("../test/server/test_client.crt"), ("../test/server/test_client.key")),
+    sdk.WithCustomer("a"),
 }
 w, err := sdk.Init(ops...)
 if err != nil {
-t.Fatal(err)
+    t.Fatal(err)
 }
 
 d := NewDeposit(w, URL)
 resp, err := d.GetNewAddress(context.Background(), &GetNewAddrReq{
-Network:   "TON",
-RequestId: "12345",
+    Network:   "TON",
+    RequestId: "12345",
 })
 
 ```
@@ -282,21 +311,24 @@ RequestId: "12345",
 ```go
     // test
 ops := []sdk.Option{
-sdk.WithCustomer("a"),
-sdk.WithTest(true),
+    sdk.WithCustomer("a"),
+    sdk.WithTest(true),
 }
 w, err := sdk.Init(ops...)
 if err != nil {
-t.Fatal(err)
+    t.Fatal(err)
 }
 
 d := NewDeposit(URL)
 resp, err := d.GetNewAddress(context.Background(), &GetNewAddrReq{
-Network:   "TON",
-RequestId: "12345",
+    Network:   "TON",
+    RequestId: "12345",
 })
 if err != nil {
-t.Fatal(err)
+    t.Fatal(err)
 }
 ```
 
+
+## java api
+WIP
