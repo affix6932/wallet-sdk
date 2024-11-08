@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/shopspring/decimal"
 	"net/http"
+
+	"github.com/shopspring/decimal"
 
 	"github.com/pkg/errors"
 

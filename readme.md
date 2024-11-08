@@ -3,6 +3,7 @@
 [document](#common)
 
 [java sdk](#java-api)
+
 ```
                    ,.-^^-._          ┌─┐                                                                                                  
                   |-.____.-|         ║"│                                                                                                  
@@ -158,18 +159,18 @@ resp always like:
 
 api resp body in data:
 {
-    "msg": "",
-    "code": 0,
-    "data": {
-        "chain": "TON",
-        "hash": "og6hrZpiFxjsKsfRAr+CIQdZp",
-        "address": "EQAkhkg79yqAqbG67Ch5m8j",
-        "tag": "2",
-        "coin": "USDT",
-        "amount": "0.222222",
-        "blockNo": "",
-        "txId": "da2c87300d993cc924b9085af5f5183a"
-    }
+"msg": "",
+"code": 0,
+"data": {
+"chain": "TON",
+"hash": "og6hrZpiFxjsKsfRAr+CIQdZp",
+"address": "EQAkhkg79yqAqbG67Ch5m8j",
+"tag": "2",
+"coin": "USDT",
+"amount": "0.222222",
+"blockNo": "",
+"txId": "da2c87300d993cc924b9085af5f5183a"
+}
 }
 
 ```
@@ -257,20 +258,21 @@ path:     `/v1/api/withdraw`
 
 req:
 
-| name      | type   | comment | require |
-|-----------|--------|---------|---------|
-| requestId | string | uniq id | y       |
-
-resp:
-
-| name      | type    | comment | |
-|-----------|---------|---------|-|
+| name      | type    | comment | require |
+|-----------|---------|---------|---------|
 | requestId | string  | uniq id |
 | amount    | decimal |         |
 | coin      | string  |         |
 | network   | string  |         |
 | to        | string  |         |
 | tag       | string  |         |
+
+resp:
+
+| name | type | comment | |
+|------|------|---------|-|
+| code | int  |         |
+| msg  | int  |         |
 
 ### Withdraw Callback Struct
 
@@ -301,7 +303,7 @@ if err != nil {
 }
 
 d := NewDeposit(w, URL)
-resp, err := d.GetNewAddress(context.Background(), &GetNewAddrReq{
+    resp, err := d.GetNewAddress(context.Background(), &GetNewAddrReq{
     Network:   "TON",
     RequestId: "12345",
 })
@@ -320,7 +322,7 @@ if err != nil {
 }
 
 d := NewDeposit(URL)
-resp, err := d.GetNewAddress(context.Background(), &GetNewAddrReq{
+    resp, err := d.GetNewAddress(context.Background(), &GetNewAddrReq{
     Network:   "TON",
     RequestId: "12345",
 })
@@ -329,6 +331,6 @@ if err != nil {
 }
 ```
 
-
 ## java api
+
 WIP
