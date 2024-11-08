@@ -147,7 +147,7 @@ Current support:
 |-------|------|
 | TON   | TON  |
 | TON   | USDT |
-| TRC20 | USDT |
+| TRON  | USDT |
 
 resp always like:
 
