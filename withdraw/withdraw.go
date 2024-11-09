@@ -35,9 +35,11 @@ type (
 		Coin      string          `json:"coin"`
 		Network   string          `json:"network"`
 		To        string          `json:"to"`
+		From      string          `json:"from"`
 		Tag       string          `json:"tag"`
 		Hash      string          `json:"hash"`
 		State     int             `json:"state"`
+		Gas       decimal.Decimal `json:"gas"`
 	}
 
 	Resp[T QueryResp | DoWithdrawResp] struct {
