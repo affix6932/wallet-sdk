@@ -217,6 +217,29 @@ resp:
 | blockNo   | string  | block info               | |
 | requestId | string  | uniqueID                 | |
 
+### Deposit.QueryDetailByTxId
+
+path:    `/v1/api/deposit/query_detail_by_txid`
+
+req:
+
+| name | type   | comment             | require |
+|------|--------|---------------------|---------|
+| txId | string | txid(hash) on chain | y       |
+
+resp:
+
+| name      | type    | comment                  | |
+|-----------|---------|--------------------------|-|
+| chain     | string  | chainName                | |
+| hash      | string  | hash from chain explorer | |
+| address   | string  | address                  | |
+| tag       | string  | tag                      | |
+| coin      | string  | coin, USDT/TON/...       | |
+| amount    | decimal | 1.23456789               | |
+| blockNo   | string  | block info               | |
+| requestId | string  | uniqueID                 | |
+
 ### Deposit Callback Struct
 
 | name    | type           | comment                  | |
