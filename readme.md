@@ -2,7 +2,7 @@
 
 [document](#common)
 
-[java sdk](#java-api)
+[java sdk](https://github.com/affix6932/wallet-sdk-java)
 
 ```
                    ,.-^^-._          ┌─┐                                                                                                  
@@ -214,7 +214,7 @@ resp:
 | tag       | string  | tag                      | |
 | coin      | string  | coin, USDT/TON/...       | |
 | amount    | decimal | 1.23456789               | |
-| blockNo   | string  | confirmCnt               | |
+| blockNo   | string  | block info               | |
 | requestId | string  | uniqueID                 | |
 
 ### Deposit Callback Struct
@@ -285,7 +285,7 @@ resp:
 | amount    | decimal(40,18) |               | - |
 | requestId | string         | uniq id       | - |
 | hash      | string         | hash on chain | - |
-| fee       | decimal(40,18) |               | - |
+| gas       | decimal(40,18) |               | - |
 | tag       | string         |               | - |
 
 ## sdk example
