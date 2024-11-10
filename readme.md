@@ -301,7 +301,7 @@ resp:
 
 | name      | type           | comment       |   |
 |-----------|----------------|---------------|---|
-| chain     | string         |               | - |
+| network   | string         |               | - |
 | coin      | string         |               | - |
 | from      | string         |               | - |
 | to        | string         |               | - |
