@@ -39,6 +39,10 @@ type (
 		Tag     string `json:"tag"`
 	}
 
+	QueryDetailReqByTxID struct {
+		TxId string `json:"txId"`
+	}
+
 	Resp[T QueryDetailResp | GetNewAddrResp] struct {
 		Data T      `json:"data"`
 		Code int    `json:"code"`
@@ -47,8 +51,9 @@ type (
 )
 
 const (
-	queryDetailRoute = "/v1/api/deposit/query_detail"
-	getNewAddrRoute  = "/v1/api/deposit/get_new_address"
+	queryDetailRoute       = "/v1/api/deposit/query_detail"
+	getNewAddrRoute        = "/v1/api/deposit/get_new_address"
+	queryDetailByTxIDRoute = "/v1/api/deposit/query_detail_by_txid"
 )
 
 func NewDeposit(w *sdk.WalletClient, url string) *Deposit {
@@ -107,7 +112,31 @@ func (d *Deposit) GetNewAddress(ctx context.Context, req *GetNewAddrReq) (*GetNe
 	return &resp.Data, nil
 }
 
-func buildReq[T *QueryDetailReq | *GetNewAddrReq](ctx context.Context, req T, baseUrl, router string) (*http.Request, error) {
+func (d *Deposit) QueryDetailByTxID(ctx context.Context, req *QueryDetailReqByTxID) (*QueryDetailResp, error) {
+	r, err := buildReq(ctx, req, d.url, queryDetailByTxIDRoute)
+	if err != nil {
+		return nil, err
+	}
+	body, err := d.w.Post(ctx, r)
+	if err != nil {
+		return nil, err
+	}
+
+	var tmp string
+	if err := json.Unmarshal(body, &tmp); err != nil {
+		return nil, err
+	}
+	var resp = &Resp[QueryDetailResp]{}
+	if err := json.Unmarshal([]byte(tmp), resp); err != nil {
+		return nil, err
+	}
+	if err = getErr(resp); err != nil {
+		return nil, err
+	}
+	return &resp.Data, nil
+}
+
+func buildReq[T *QueryDetailReq | *GetNewAddrReq | *QueryDetailReqByTxID](ctx context.Context, req T, baseUrl, router string) (*http.Request, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
