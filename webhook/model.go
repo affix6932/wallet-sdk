@@ -17,7 +17,7 @@ type DepositCallbackMsg struct {
 
 // WithdrawCallbackMsg callback
 type WithdrawCallbackMsg struct {
-	Chain     string          `json:"chain"`
+	Network   string          `json:"network"`
 	Coin      string          `json:"coin"`
 	From      string          `json:"from"`
 	To        string          `json:"to"`
