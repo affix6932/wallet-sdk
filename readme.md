@@ -206,16 +206,19 @@ req:
 
 resp:
 
-| name      | type    | comment                  | |
-|-----------|---------|--------------------------|-|
-| chain     | string  | chainName                | |
-| hash      | string  | hash from chain explorer | |
-| address   | string  | address                  | |
-| tag       | string  | tag                      | |
-| coin      | string  | coin, USDT/TON/...       | |
-| amount    | decimal | 1.23456789               | |
-| blockNo   | string  | block info               | |
-| requestId | string  | uniqueID                 | |
+| name         | type           | comment                  |   |
+|--------------|----------------|--------------------------|---|
+| chain        | string         | chainName                |   |
+| hash         | string         | hash from chain explorer |   |
+| address      | string         | address                  |   |
+| tag          | string         | tag                      |   |
+| coin         | string         | coin, USDT/TON/...       |   |
+| amount       | decimal        | 1.23456789               |   |
+| blockNo      | string         | block info               |   |
+| requestId    | string         | uniqueID                 |   |
+| exchangeRate | decimal(40,18) |                          | - |
+| fiatAmount   | decimal(40,18) |                          | - |
+| symbol       | string         |                          | - |
 
 ### Deposit.QueryDetailByTxId
 
@@ -229,16 +232,19 @@ req:
 
 resp:
 
-| name      | type    | comment                  | |
-|-----------|---------|--------------------------|-|
-| chain     | string  | chainName                | |
-| hash      | string  | hash from chain explorer | |
-| address   | string  | address                  | |
-| tag       | string  | tag                      | |
-| coin      | string  | coin, USDT/TON/...       | |
-| amount    | decimal | 1.23456789               | |
-| blockNo   | string  | block info               | |
-| requestId | string  | uniqueID                 | |
+| name         | type           | comment                  |   |
+|--------------|----------------|--------------------------|---|
+| chain        | string         | chainName                |   |
+| hash         | string         | hash from chain explorer |   |
+| address      | string         | address                  |   |
+| tag          | string         | tag                      |   |
+| coin         | string         | coin, USDT/TON/...       |   |
+| amount       | decimal        | 1.23456789               |   |
+| blockNo      | string         | block info               |   |
+| requestId    | string         | uniqueID                 |   |
+| exchangeRate | decimal(40,18) |                          | - |
+| fiatAmount   | decimal(40,18) |                          | - |
+| symbol       | string         |                          | - |
 
 ### Deposit Callback Struct
 
@@ -263,17 +269,20 @@ req:
 
 resp:
 
-| name      | type    | comment                                | |
-|-----------|---------|----------------------------------------|-|
-| requestId | string  | uniq id                                |
-| amount    | decimal |                                        |
-| coin      | string  |                                        |
-| network   | string  |                                        |
-| to        | string  |                                        |
-| tag       | string  |                                        |
-| hash      | string  |                                        |
-| state     | int     | 0: pending, 1: process, 2: succ 3:fail |
-| gas       | decimal |                                        |
+| name         | type           | comment                                |   |
+|--------------|----------------|----------------------------------------|---|
+| requestId    | string         | uniq id                                |
+| amount       | decimal        |                                        |
+| coin         | string         |                                        |
+| network      | string         |                                        |
+| to           | string         |                                        |
+| tag          | string         |                                        |
+| hash         | string         |                                        |
+| state        | int            | 0: pending, 1: process, 2: succ 3:fail |
+| gas          | decimal        |                                        |
+| exchangeRate | decimal(40,18) |                                        | - |
+| fiatAmount   | decimal(40,18) |                                        | - |
+| symbol       | string         |                                        | - |
 
 ### Withdraw.DoWithdraw
 
@@ -283,12 +292,34 @@ req:
 
 | name      | type    | comment | require |
 |-----------|---------|---------|---------|
-| requestId | string  | uniq id |
-| amount    | decimal |         |
-| coin      | string  |         |
-| network   | string  |         |
-| to        | string  |         |
-| tag       | string  |         |
+| requestId | string  | uniq id | y       |
+| amount    | decimal |         | y       |
+| coin      | string  |         | y       |
+| network   | string  |         | y       |
+| to        | string  |         | y       |
+| tag       | string  |         | y       |
+
+resp:
+
+| name | type | comment | |
+|------|------|---------|-|
+| code | int  |         |
+| msg  | int  |         |
+
+### Withdraw.DoWithdraw
+
+path:     `/v1/api/withdraw_symbol`
+
+req:
+
+| name       | type    | comment | require |
+|------------|---------|---------|---------|
+| requestId  | string  | uniq id | y       |
+| fiatAmount | decimal |         | y       |
+| symbol     | string  |         | y       |
+| network    | string  |         | y       |
+| to         | string  |         | y       |
+| tag        | string  |         | y       |
 
 resp:
 
@@ -299,17 +330,37 @@ resp:
 
 ### Withdraw Callback Struct
 
-| name      | type           | comment       |   |
-|-----------|----------------|---------------|---|
-| network   | string         |               | - |
-| coin      | string         |               | - |
-| from      | string         |               | - |
-| to        | string         |               | - |
-| amount    | decimal(40,18) |               | - |
-| requestId | string         | uniq id       | - |
-| hash      | string         | hash on chain | - |
-| gas       | decimal(40,18) |               | - |
-| tag       | string         |               | - |
+| name         | type           | comment       |   |
+|--------------|----------------|---------------|---|
+| network      | string         |               | - |
+| coin         | string         |               | - |
+| from         | string         |               | - |
+| to           | string         |               | - |
+| amount       | decimal(40,18) |               | - |
+| requestId    | string         | uniq id       | - |
+| hash         | string         | hash on chain | - |
+| gas          | decimal(40,18) |               | - |
+| tag          | string         |               | - |
+| exchangeRate | decimal(40,18) |               | - |
+| fiatAmount   | decimal(40,18) |               | - |
+| symbol       | string         |               | - |
+
+### Exchange Rate
+
+path: `/v1/api/exchange_rate`
+
+req:
+
+| name   | type   | comment                        | require |
+|--------|--------|--------------------------------|---------|
+| symbol | string | USDT/USD,USDT/EUR,USDT/BRL ... | y       |
+
+resp:
+
+| name      | type            | comment                   |            |
+|-----------|-----------------|---------------------------|------------|
+| price     | decimal(40, 18) | USDT to USD/EUR/BRL price | 0.9999     |
+| updatedAt | int             | timestamp(10)             | 1731470665 |
 
 ## sdk example
 
