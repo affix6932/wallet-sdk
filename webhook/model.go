@@ -27,4 +27,5 @@ type WithdrawCallbackMsg struct {
 	RequestID string          `json:"requestId"`
 	Hash      string          `json:"hash"`
 	GasFee    decimal.Decimal `json:"gas"`
+	State     int             `json:"state"`
 }
