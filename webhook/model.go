@@ -6,13 +6,14 @@ import (
 
 // DepositCallbackMsg deposit callback
 type DepositCallbackMsg struct {
-	Chain     string          `json:"chain" `
-	Hash      string          `json:"hash" `
-	Address   string          `json:"address" `
-	Coin      string          `json:"coin" `
-	Amount    decimal.Decimal `json:"amount" `
-	Tag       string          `json:"tag" `
-	RequestId string          `json:"requestId" `
+	Chain     string          `json:"chain"`
+	Hash      string          `json:"hash"`
+	Address   string          `json:"address"`
+	Coin      string          `json:"coin"`
+	Amount    decimal.Decimal `json:"amount"`
+	Tag       string          `json:"tag"`
+	RequestId string          `json:"requestId"`
+	From      string          `json:"from"`
 }
 
 // WithdrawCallbackMsg callback

@@ -24,6 +24,7 @@ type (
 		Chain     string          `json:"chain"`
 		Hash      string          `json:"hash"`
 		Address   string          `json:"address"`
+		From      string          `json:"from"`
 		Tag       string          `json:"tag"`
 		Coin      string          `json:"coin"`
 		Amount    decimal.Decimal `json:"amount"`
