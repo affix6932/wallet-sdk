@@ -248,14 +248,17 @@ resp:
 
 ### Deposit Callback Struct
 
-| name    | type           | comment                  | |
-|---------|----------------|--------------------------|-|
-| chain   | string         | chainName                | |
-| hash    | string         | hash from chain explorer | |
-| address | string         | address                  | |
-| tag     | string         | tag                      | |
-| coin    | string         | coin, USDT/TON/...       | |
-| amount  | decimal(40,18) | 0.123456                 | |
+| name         | type           | comment                  |   |
+|--------------|----------------|--------------------------|---|
+| chain        | string         | chainName                |   |
+| hash         | string         | hash from chain explorer |   |
+| address      | string         | address                  |   |
+| tag          | string         | tag                      |   |
+| coin         | string         | coin, USDT/TON/...       |   |
+| amount       | decimal(40,18) | 0.123456                 |   |
+| exchangeRate | decimal(40,18) |                          | - |
+| fiatAmount   | decimal(40,18) |                          | - |
+| symbol       | string         |                          | - |
 
 ### Withdraw.QueryDetail
 
