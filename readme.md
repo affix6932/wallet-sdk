@@ -312,14 +312,14 @@ path:     `/v1/api/withdraw_symbol`
 
 req:
 
-| name       | type    | comment | require |
-|------------|---------|---------|---------|
-| requestId  | string  | uniq id | y       |
-| fiatAmount | decimal |         | y       |
-| symbol     | string  |         | y       |
-| network    | string  |         | y       |
-| to         | string  |         | y       |
-| tag        | string  |         | y       |
+| name       | type    | comment           | require |
+|------------|---------|-------------------|---------|
+| requestId  | string  | uniq id           | y       |
+| fiatAmount | decimal |                   | y       |
+| symbol     | string  | USDT/EUR,USDT/BRL | y       |
+| network    | string  |                   | y       |
+| to         | string  |                   | y       |
+| tag        | string  |                   | y       |
 
 resp:
 
