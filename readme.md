@@ -309,7 +309,7 @@ resp:
 | code | int  |         |
 | msg  | int  |         |
 
-### Withdraw.DoWithdraw
+### Withdraw.DoWithdrawSymbol
 
 path:     `/v1/api/withdraw_symbol`
 
