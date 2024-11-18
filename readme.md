@@ -262,6 +262,7 @@ resp:
 | exchangeRate | decimal(40,18) |                          | - |
 | fiatAmount   | decimal(40,18) |                          | - |
 | symbol       | string         |                          | - |
+| requestId    | string         | uniq ID                  | - |
 
 ### Withdraw.QueryDetail
 
