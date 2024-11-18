@@ -21,15 +21,19 @@ type (
 	}
 
 	QueryDetailResp struct {
-		Chain     string          `json:"chain"`
-		Hash      string          `json:"hash"`
-		Address   string          `json:"address"`
-		From      string          `json:"from"`
-		Tag       string          `json:"tag"`
-		Coin      string          `json:"coin"`
-		Amount    decimal.Decimal `json:"amount"`
-		Confirm   string          `json:"blockNo"`
-		RequestID string          `json:"requestId"`
+		Chain        string          `json:"chain"`
+		Hash         string          `json:"hash"`
+		Address      string          `json:"address"`
+		From         string          `json:"from"`
+		Tag          string          `json:"tag"`
+		Coin         string          `json:"coin"`
+		Amount       decimal.Decimal `json:"amount"`
+		Confirm      string          `json:"blockNo"`
+		RequestID    string          `json:"requestId"`
+		FiatAmount   decimal.Decimal `json:"fiatAmount"`
+		Symbol       string          `json:"symbol"`
+		ExchangeRate decimal.Decimal `json:"exchangeRate"`
+		Broker       string          `json:"broker"`
 	}
 	GetNewAddrReq struct {
 		Network   string `json:"network"`

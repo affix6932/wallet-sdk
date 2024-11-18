@@ -40,6 +40,7 @@ type (
 		Hash      string          `json:"hash"`
 		State     int             `json:"state"`
 		Gas       decimal.Decimal `json:"gas"`
+		Broker    string          `json:"broker"`
 	}
 
 	Resp[T QueryResp | DoWithdrawResp] struct {

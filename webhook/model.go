@@ -6,14 +6,18 @@ import (
 
 // DepositCallbackMsg deposit callback
 type DepositCallbackMsg struct {
-	Chain     string          `json:"chain"`
-	Hash      string          `json:"hash"`
-	Address   string          `json:"address"`
-	Coin      string          `json:"coin"`
-	Amount    decimal.Decimal `json:"amount"`
-	Tag       string          `json:"tag"`
-	RequestId string          `json:"requestId"`
-	From      string          `json:"from"`
+	Chain        string          `json:"chain"`
+	Hash         string          `json:"hash"`
+	Address      string          `json:"address"`
+	Coin         string          `json:"coin"`
+	Amount       decimal.Decimal `json:"amount"`
+	Tag          string          `json:"tag"`
+	RequestId    string          `json:"requestId"`
+	From         string          `json:"from"`
+	FiatAmount   decimal.Decimal `json:"fiatAmount"`
+	Symbol       string          `json:"symbol"`
+	ExchangeRate decimal.Decimal `json:"exchangeRate"`
+	Broker       string          `json:"broker"`
 }
 
 // WithdrawCallbackMsg callback
@@ -28,4 +32,5 @@ type WithdrawCallbackMsg struct {
 	Hash      string          `json:"hash"`
 	GasFee    decimal.Decimal `json:"gas"`
 	State     int             `json:"state"`
+	Broker    string          `json:"broker"`
 }

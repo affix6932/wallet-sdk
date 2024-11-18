@@ -220,6 +220,7 @@ resp:
 | exchangeRate | decimal(40,18) |                          | - |
 | fiatAmount   | decimal(40,18) |                          | - |
 | symbol       | string         |                          | - |
+| broker       | string         |                          | - |
 
 ### Deposit.QueryDetailByTxId
 
@@ -247,6 +248,7 @@ resp:
 | exchangeRate | decimal(40,18) |                          | - |
 | fiatAmount   | decimal(40,18) |                          | - |
 | symbol       | string         |                          | - |
+| broker       | string         |                          | - |
 
 ### Deposit Callback Struct
 
@@ -263,6 +265,7 @@ resp:
 | fiatAmount   | decimal(40,18) |                          | - |
 | symbol       | string         |                          | - |
 | requestId    | string         | uniq ID                  | - |
+| broker       | string         |                          | - |
 
 ### Withdraw.QueryDetail
 
