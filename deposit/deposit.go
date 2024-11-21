@@ -6,9 +6,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/shopspring/decimal"
-
 	"github.com/pkg/errors"
+	"github.com/shopspring/decimal"
 
 	sdk "github.com/affix6932/wallet-sdk"
 )
