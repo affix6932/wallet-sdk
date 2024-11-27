@@ -34,3 +34,15 @@ type WithdrawCallbackMsg struct {
 	State     int             `json:"state"`
 	Broker    string          `json:"broker"`
 }
+
+type CollectCallbackMsg struct {
+	RequestId string          `json:"requestId"`
+	Amount    decimal.Decimal `json:"amount"`
+	Coin      string          `json:"coin"`
+	Chain     string          `json:"chain"`
+	To        string          `json:"to"`
+	Tag       string          `json:"tag"`
+	Hash      string          `json:"hash"`
+	From      string          `json:"from"`
+	Gas       decimal.Decimal `json:"gas"`
+}
