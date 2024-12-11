@@ -34,18 +34,18 @@ func (w *WalletClient) postWithEncrypt(ctx context.Context, req *http.Request) (
 	defer req.Body.Close()
 	body, err := io.ReadAll(req.Body)
 	if err != nil {
-		return nil, errors.WithMessage(err, "read request body")
+		return nil, errors.Wrap(err, "read request body")
 	}
 
 	secret := generateRandomString(letters, 16)
 	cipher, err := encrypt.AESEncryptECB([]byte(secret), body)
 	if err != nil {
-		return nil, errors.WithMessage(err, "encrypt body err")
+		return nil, errors.Wrap(err, "encrypt body err")
 	}
 
 	cipherS, err := w.encrypt.Encrypt([]byte(secret))
 	if err != nil {
-		return nil, errors.WithMessage(err, "encrypt secret err")
+		return nil, errors.Wrap(err, "encrypt secret err")
 	}
 
 	req.Header.Set(Wsecret, cipherS)
@@ -60,20 +60,20 @@ func (w *WalletClient) postWithEncrypt(ctx context.Context, req *http.Request) (
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := cli.Do(req)
 	if err != nil {
-		return nil, errors.WithMessage(err, "http post request err")
+		return nil, errors.Wrap(err, "http post request err")
 	}
 	defer resp.Body.Close()
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, errors.WithMessage(err, "read response body")
+		return nil, errors.Wrap(err, "read response body")
 	}
 	gwResp := &GWResp{}
 	err = json.Unmarshal(b, gwResp)
 	if err != nil {
-		return nil, errors.WithMessage(err, "json unmarshal err")
+		return nil, errors.Wrap(err, "json unmarshal err")
 	}
 	if gwResp.Code != 0 {
-		return nil, errors.New(gwResp.Msg)
+		return nil, errors.WithStack(errors.New(gwResp.Msg))
 	}
 	return gwResp.Data, nil
 }
@@ -88,20 +88,20 @@ func (w *WalletClient) postWithoutEncrypt(ctx context.Context, req *http.Request
 
 	resp, err := cli.Do(req)
 	if err != nil {
-		return nil, errors.WithMessage(err, "http post request err")
+		return nil, errors.Wrap(err, "http post request err")
 	}
 	defer resp.Body.Close()
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, errors.WithMessage(err, "read response body")
+		return nil, errors.Wrap(err, "read response body")
 	}
 	gwResp := &GWResp{}
 	err = json.Unmarshal(b, gwResp)
 	if err != nil {
-		return nil, errors.WithMessage(err, "json unmarshal err")
+		return nil, errors.Wrap(err, "json unmarshal err")
 	}
 	if gwResp.Code != 0 {
-		return nil, errors.New(gwResp.Msg)
+		return nil, errors.WithStack(errors.New(gwResp.Msg))
 	}
 	return gwResp.Data, nil
 }

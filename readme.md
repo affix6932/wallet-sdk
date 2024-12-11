@@ -4,6 +4,19 @@
 
 [java sdk](https://github.com/affix6932/wallet-sdk-java)
 
+- [Common](#common)
+    * [Deposit.GetNewAddress](#depositgetnewaddress)
+    * [Deposit.QueryDetail](#depositquerydetail)
+    * [Deposit.QueryDetailByTxId](#depositquerydetailbytxid)
+    * [Deposit Callback Struct](#deposit-callback-struct)
+    * [Withdraw.QueryDetail](#withdrawquerydetail)
+    * [Withdraw.DoWithdraw](#withdrawdowithdraw)
+    * [Withdraw.DoWithdrawSymbol](#withdrawdowithdrawsymbol)
+    * [Withdraw Callback Struct](#withdraw-callback-struct)
+    * [Exchange Rate](#exchange-rate)
+- [sdk example](#sdk-example)
+- [java sdk](#java-sdk)
+
 ```
                    ,.-^^-._          ┌─┐                                                                                                  
                   |-.____.-|         ║"│                                                                                                  
@@ -148,6 +161,9 @@ Current support:
 | TON   | TON  |
 | TON   | USDT |
 | TRON  | USDT |
+| TRON  | TRX  |
+| BSC   | USDT |
+| ETH   | USDT |
 
 resp always like:
 
@@ -372,6 +388,40 @@ resp:
 | price     | decimal(40, 18) | USDT to USD/EUR/BRL price | 0.9999     |
 | updatedAt | int             | timestamp(10)             | 1731470665 |
 
+### Get Deposit Min Limit
+
+path: `/v1/api/deposit/get_deposit_min_limit`
+
+req:
+
+| name  | type   | comment          | require |
+|-------|--------|------------------|---------|
+| chain | string | TRON/TON ...     | y       |
+| coin  | string | TRX/TON/USDT ... | y       |
+
+resp:
+
+| name   | type            | comment                                            |        |
+|--------|-----------------|----------------------------------------------------|--------|
+| amount | decimal(40, 18) | deposit will callback when greater than min amount | 0.9999 |
+
+### Set Deposit Min Limit
+
+path: `/v1/api/deposit/set_deposit_min_limit`
+
+req:
+
+| name   | type            | comment          | require |
+|--------|-----------------|------------------|---------|
+| chain  | string          | TRON/TON ...     | y       |
+| coin   | string          | TRX/TON/USDT ... | y       |
+| amount | decimal(40, 18) |                  | y       |
+
+resp:
+Returns null by default, if it fails, code will not be 0.
+If the setting is successful, it will take effect in one minute.
+
+
 ## sdk example
 
 ```go
@@ -415,6 +465,6 @@ t.Fatal(err)
 }
 ```
 
-## java api
+## java sdk
 
-WIP
+[java sdk](https://github.com/affix6932/wallet-sdk-java)
