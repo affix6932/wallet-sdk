@@ -4,12 +4,11 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"go.opentelemetry.io/otel/trace"
 	"io"
 	"net/http"
 	"strconv"
 	"time"
-
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/pkg/errors"
 )
@@ -32,22 +31,34 @@ type GWResp struct {
 
 func (w *WalletClient) postWithEncrypt(ctx context.Context, req *http.Request) ([]byte, error) {
 	cli := w.client
+
+	// set trace
+	tr := cli.provider.Tracer("w-sdk")
+	var span trace.Span
+	if req.Context() != nil {
+		ctx = req.Context()
+	}
+	ctx, span = tr.Start(ctx, "postWithEncrypt")
+	defer span.End()
+	req = req.WithContext(ctx)
+	traceID := span.SpanContext().TraceID().String()
+
 	encrypt := w.encrypt
 	defer req.Body.Close()
 	body, err := io.ReadAll(req.Body)
 	if err != nil {
-		return nil, errors.Wrap(err, "read request body")
+		return nil, errors.Wrap(err, "read request body, traceID. traceID: "+traceID)
 	}
 
 	secret := generateRandomString(letters, 16)
 	cipher, err := encrypt.AESEncryptECB([]byte(secret), body)
 	if err != nil {
-		return nil, errors.Wrap(err, "encrypt body err")
+		return nil, errors.Wrap(err, "encrypt body err. traceID: "+traceID)
 	}
 
 	cipherS, err := w.encrypt.Encrypt([]byte(secret))
 	if err != nil {
-		return nil, errors.Wrap(err, "encrypt secret err")
+		return nil, errors.Wrap(err, "encrypt secret err. traceID: "+traceID)
 	}
 
 	req.Header.Set(Wsecret, cipherS)
@@ -60,27 +71,20 @@ func (w *WalletClient) postWithEncrypt(ctx context.Context, req *http.Request) (
 	req.ContentLength = int64(len(cipher))
 	req.Header.Set("Content-Length", strconv.Itoa(len(cipher)))
 	req.Header.Set("Content-Type", "application/json")
-	tr := cli.provider.Tracer("w-sdk")
-	var span trace.Span
-	if req.Context() != nil {
-		ctx = req.Context()
-	}
-	ctx, span = tr.Start(ctx, "postWithEncrypt")
-	defer span.End()
-	req = req.WithContext(ctx)
+
 	resp, err := cli.Do(req)
 	if err != nil {
-		return nil, errors.Wrap(err, "http post request err")
+		return nil, errors.Wrap(err, "http post request err. traceID: "+traceID)
 	}
 	defer resp.Body.Close()
 	b, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, errors.Wrap(err, "read response body")
+		return nil, errors.Wrap(err, "read response body. traceID: "+traceID)
 	}
 	gwResp := &GWResp{}
 	err = json.Unmarshal(b, gwResp)
 	if err != nil {
-		return nil, errors.Wrap(err, "json unmarshal err")
+		return nil, errors.Wrap(err, "json unmarshal err. traceID: "+traceID)
 	}
 	if gwResp.Code != 0 {
 		return nil, errors.WithStack(errors.New(gwResp.Msg))
