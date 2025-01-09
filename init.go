@@ -7,13 +7,22 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/affix6932/wallet-sdk/encrypt"
-
 	"github.com/pkg/errors"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+
+	"github.com/affix6932/wallet-sdk/encrypt"
 )
 
+func init() {
+	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(
+		propagation.TraceContext{}, propagation.Baggage{}))
+}
+
 type WalletClient struct {
-	client *http.Client
+	client httpClient
 
 	encrypt encrypt.Encrypt
 
@@ -22,11 +31,22 @@ type WalletClient struct {
 	customer string
 }
 
+type httpClient struct {
+	*http.Client
+	provider *sdktrace.TracerProvider
+}
+
 type Option func(cfg *config)
 
 func WithCustomer(c string) Option {
 	return func(cfg *config) {
 		cfg.customer = c
+	}
+}
+
+func WithOtelProvider(op *sdktrace.TracerProvider) Option {
+	return func(cfg *config) {
+		cfg.provider = op
 	}
 }
 
@@ -69,6 +89,10 @@ func Init(ops ...Option) (*WalletClient, error) {
 		op(cfg)
 	}
 
+	if cfg.provider == nil {
+		cfg.provider = sdktrace.NewTracerProvider(sdktrace.WithSampler(sdktrace.AlwaysSample()))
+	}
+
 	if len(cfg.customer) == 0 {
 		return nil, ConfigMissCustomerErr
 	}
@@ -92,8 +116,10 @@ func Init(ops ...Option) (*WalletClient, error) {
 
 	// test mode
 	if cfg.isTest {
-		client = &http.Client{}
-		return &WalletClient{client: client, isTest: cfg.isTest, customer: cfg.customer}, nil
+		client = &http.Client{
+			Transport: otelhttp.NewTransport(http.DefaultTransport),
+		}
+		return &WalletClient{client: httpClient{client, cfg.provider}, isTest: cfg.isTest, customer: cfg.customer}, nil
 	}
 	clientCert, caPool, err := initCert(cfg)
 	if err != nil {
@@ -106,8 +132,8 @@ func Init(ops ...Option) (*WalletClient, error) {
 	}
 
 	tr := &http.Transport{TLSClientConfig: tlsCfg, Proxy: http.ProxyFromEnvironment}
-	client = &http.Client{Transport: tr}
-	return &WalletClient{client: client, encrypt: encrypt.Init(secret), isTest: cfg.isTest, customer: cfg.customer}, nil
+	client = &http.Client{Transport: otelhttp.NewTransport(tr)}
+	return &WalletClient{client: httpClient{client, cfg.provider}, encrypt: encrypt.Init(secret), isTest: cfg.isTest, customer: cfg.customer}, nil
 }
 
 // use path

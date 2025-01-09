@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"time"
 
+	"go.opentelemetry.io/otel/trace"
+
 	"github.com/pkg/errors"
 )
 
@@ -58,6 +60,14 @@ func (w *WalletClient) postWithEncrypt(ctx context.Context, req *http.Request) (
 	req.ContentLength = int64(len(cipher))
 	req.Header.Set("Content-Length", strconv.Itoa(len(cipher)))
 	req.Header.Set("Content-Type", "application/json")
+	tr := cli.provider.Tracer("w-sdk")
+	var span trace.Span
+	if req.Context() != nil {
+		ctx = req.Context()
+	}
+	ctx, span = tr.Start(ctx, "postWithEncrypt")
+	defer span.End()
+	req = req.WithContext(ctx)
 	resp, err := cli.Do(req)
 	if err != nil {
 		return nil, errors.Wrap(err, "http post request err")
@@ -80,7 +90,6 @@ func (w *WalletClient) postWithEncrypt(ctx context.Context, req *http.Request) (
 
 func (w *WalletClient) postWithoutEncrypt(ctx context.Context, req *http.Request) ([]byte, error) {
 	cli := w.client
-
 	req.Header.Set(Wbroker, w.customer)
 
 	req.Header.Set("Content-Type", "application/json")

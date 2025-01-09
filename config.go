@@ -1,5 +1,7 @@
 package sdk
 
+import sdktrace "go.opentelemetry.io/otel/sdk/trace"
+
 type config struct {
 	caCert []byte
 	cert   []byte
@@ -15,4 +17,6 @@ type config struct {
 
 	secretPath  string
 	secretBytes []byte
+
+	provider *sdktrace.TracerProvider
 }
