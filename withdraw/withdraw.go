@@ -51,8 +51,9 @@ type (
 )
 
 const (
-	routeQueryWithdraw = "/v1/api/withdraw/query_detail"
-	routeWithdraw      = "/v1/api/withdraw"
+	routeQueryWithdraw   = "/v1/api/withdraw/query_detail"
+	routeWithdraw        = "/v1/api/withdraw"
+	routeFinanceWithdraw = "/v1/api/financial_withdraw"
 )
 
 func NewWithdraw(w *sdk.WalletClient, url string) *Withdraw {
@@ -104,6 +105,30 @@ func (d *Withdraw) QueryDetail(ctx context.Context, req *QueryReq) (*QueryResp, 
 
 func (d *Withdraw) DoWithdraw(ctx context.Context, req *DoWithdrawReq) (*DoWithdrawResp, error) {
 	r, err := buildReq(ctx, req, d.url, routeWithdraw)
+	if err != nil {
+		return nil, err
+	}
+	body, err := d.w.Post(ctx, r)
+	if err != nil {
+		return nil, err
+	}
+
+	var tmp string
+	if err := json.Unmarshal(body, &tmp); err != nil {
+		return nil, err
+	}
+	var resp = &Resp[DoWithdrawResp]{}
+	if err := json.Unmarshal([]byte(tmp), resp); err != nil {
+		return nil, err
+	}
+	if err = getErr(resp); err != nil {
+		return nil, err
+	}
+	return &resp.Data, nil
+}
+
+func (d *Withdraw) DoFinanceWithdraw(ctx context.Context, req *DoWithdrawReq) (*DoWithdrawResp, error) {
+	r, err := buildReq(ctx, req, d.url, routeFinanceWithdraw)
 	if err != nil {
 		return nil, err
 	}
