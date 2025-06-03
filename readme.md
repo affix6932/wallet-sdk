@@ -165,7 +165,24 @@ Current support:
 | TRON  | USDT |
 | TRON  | TRX  |
 | BSC   | USDT |
+| BSC   | BNB |
 | ETH   | USDT |
+| ETH   | ETH |
+| ETH   | USDC |
+| SOL   | USDT |
+| SOL   | SOL  |
+| SOL   | USDC  |
+| BTC   | BTC  |
+| ARBITRUM|ARBI|
+| ARBITRUM|USDT|
+| ARBITRUM|ETH|
+|XRP|XRP|
+|POLYGON|POL|
+|POLYGON|USDT|
+|OPTIMISM|ETH|
+|OPTIMISM|USDT|
+|AVAXC|AVAX|
+|AVAXC|USDT|
 
 resp always like:
 
