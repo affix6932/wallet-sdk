@@ -173,7 +173,7 @@ Current support:
 | SOL   | SOL  |
 | SOL   | USDC  |
 | BTC   | BTC  |
-| ARBITRUM|ARBI|
+| ARBITRUM|ARB|
 | ARBITRUM|USDT|
 | ARBITRUM|ETH|
 |XRP|XRP|
