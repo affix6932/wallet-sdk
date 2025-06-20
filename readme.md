@@ -183,7 +183,7 @@ Current support:
 |OPTIMISM|USDT|
 |AVAXC|AVAX|
 |AVAXC|USDT|
-
+|CARDANO|ADA|
 resp always like:
 
 ```go
