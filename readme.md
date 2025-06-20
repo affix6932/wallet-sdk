@@ -184,6 +184,8 @@ Current support:
 |AVAXC|AVAX|
 |AVAXC|USDT|
 |ADA(CARDANO)|ADA|
+|DOGE|DOGE|
+
 resp always like:
 
 ```go
