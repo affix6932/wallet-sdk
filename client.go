@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"go.opentelemetry.io/otel/trace"
 	"io"
 	"net/http"
 	"strconv"
 	"time"
+
+	"go.opentelemetry.io/otel/trace"
 
 	"github.com/pkg/errors"
 )

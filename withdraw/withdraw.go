@@ -24,6 +24,7 @@ type (
 		Network   string          `json:"network"`
 		To        string          `json:"to"`
 		Tag       string          `json:"tag"`
+		Extra     string          `json:"extra"`
 	}
 	DoWithdrawResp struct{}
 	QueryReq       struct {

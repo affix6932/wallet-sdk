@@ -98,7 +98,7 @@ func Init(ops ...Option) (*WalletClient, error) {
 	}
 
 	// not test mode must have ca/cert/key
-	if !cfg.isTest && !(isByte(cfg) || isFilePath(cfg)) {
+	if !cfg.isTest && (!isByte(cfg) && !isFilePath(cfg)) {
 		return nil, ConfigMissCertErr
 	}
 
@@ -138,12 +138,12 @@ func Init(ops ...Option) (*WalletClient, error) {
 
 // use path
 func isFilePath(cfg *config) bool {
-	return !(len(cfg.caCertPath) == 0 || len(cfg.certPath) == 0 || len(cfg.keyPath) == 0)
+	return len(cfg.caCertPath) != 0 && len(cfg.certPath) != 0 && len(cfg.keyPath) != 0
 }
 
 // use byte
 func isByte(cfg *config) bool {
-	return !(len(cfg.key) == 0 || len(cfg.caCert) == 0 || len(cfg.cert) == 0)
+	return len(cfg.key) != 0 && len(cfg.caCert) != 0 && len(cfg.cert) != 0
 }
 
 func initCert(cfg *config) (*tls.Certificate, *x509.CertPool, error) {
