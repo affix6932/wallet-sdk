@@ -5,17 +5,17 @@
 [java sdk](https://github.com/affix6932/wallet-sdk-java)
 
 - [Common](#common)
-  * [Deposit.GetNewAddress](#depositgetnewaddress)
-  * [Deposit.QueryDetail](#depositquerydetail)
-  * [Deposit.QueryDetailByTxId](#depositquerydetailbytxid)
-  * [Deposit Callback Struct](#deposit-callback-struct)
-  * [Withdraw.QueryDetail](#withdrawquerydetail)
-  * [Withdraw.DoWithdraw](#withdrawdowithdraw)
-  * [Withdraw.DoWithdrawSymbol](#withdrawdowithdrawsymbol)
-  * [Withdraw Callback Struct](#withdraw-callback-struct)
-  * [Exchange Rate](#exchange-rate)
-  * [Get Deposit Min Limit](#get-deposit-min-limit)
-  * [Set Deposit Min Limit](#set-deposit-min-limit)
+    * [Deposit.GetNewAddress](#depositgetnewaddress)
+    * [Deposit.QueryDetail](#depositquerydetail)
+    * [Deposit.QueryDetailByTxId](#depositquerydetailbytxid)
+    * [Deposit Callback Struct](#deposit-callback-struct)
+    * [Withdraw.QueryDetail](#withdrawquerydetail)
+    * [Withdraw.DoWithdraw](#withdrawdowithdraw)
+    * [Withdraw.DoWithdrawSymbol](#withdrawdowithdrawsymbol)
+    * [Withdraw Callback Struct](#withdraw-callback-struct)
+    * [Exchange Rate](#exchange-rate)
+    * [Get Deposit Min Limit](#get-deposit-min-limit)
+    * [Query Gas Fee by Network](#query-gas-fee-by-network)
 - [sdk example](#sdk-example)
 - [java sdk](#java-sdk)
 
@@ -158,33 +158,33 @@ W-Broker must in header.
 
 Current support:
 
-| chain | coin |
-|-------|------|
-| TON   | TON  |
-| TON   | USDT |
-| TRON  | USDT |
-| TRON  | TRX  |
-| BSC   | USDT |
-| BSC   | BNB |
-| ETH   | USDT |
-| ETH   | ETH |
-| ETH   | USDC |
-| SOL   | USDT |
-| SOL   | SOL  |
-| SOL   | USDC  |
-| BTC   | BTC  |
-| ARBITRUM|ARB|
-| ARBITRUM|USDT|
-| ARBITRUM|ETH|
-|XRP|XRP|
-|POLYGON|POL|
-|POLYGON|USDT|
-|OPTIMISM|ETH|
-|OPTIMISM|USDT|
-|AVAXC|AVAX|
-|AVAXC|USDT|
-|ADA(CARDANO)|ADA|
-|DOGE|DOGE|
+| chain        | coin |
+|--------------|------|
+| TON          | TON  |
+| TON          | USDT |
+| TRON         | USDT |
+| TRON         | TRX  |
+| BSC          | USDT |
+| BSC          | BNB  |
+| ETH          | USDT |
+| ETH          | ETH  |
+| ETH          | USDC |
+| SOL          | USDT |
+| SOL          | SOL  |
+| SOL          | USDC |
+| BTC          | BTC  |
+| ARBITRUM     | ARB  |
+| ARBITRUM     | USDT |
+| ARBITRUM     | ETH  |
+| XRP          | XRP  |
+| POLYGON      | POL  |
+| POLYGON      | USDT |
+| OPTIMISM     | ETH  |
+| OPTIMISM     | USDT |
+| AVAXC        | AVAX |
+| AVAXC        | USDT |
+| ADA(CARDANO) | ADA  |
+| DOGE         | DOGE |
 
 resp always like:
 
@@ -442,6 +442,24 @@ resp:
 Returns null by default, if it fails, code will not be 0.
 If the setting is successful, it will take effect in one minute.
 
+### Query Gas Fee by Network
+
+path: `/v1/api/deposit/set_deposit_min_limit`
+
+req:
+
+| name    | type   | comment      | require |
+|---------|--------|--------------|---------|
+| network | string | TRON/TON ... | y       |
+
+resp:
+
+| name      | type    | example   | comment             |
+|-----------|---------|-----------|---------------------|
+| network   | string  | TRON ...  |                     |
+| fee       | decimal | 1.234 ... | gas fee amount      |
+| gas_token | string  | TRX...    | which token for gas |
+| token     | string  | trx       | token for withdraw  |
 
 ## sdk example
 
