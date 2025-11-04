@@ -447,6 +447,7 @@ If the setting is successful, it will take effect in one minute.
 path: `/v1/api/deposit/set_deposit_min_limit`
 
 req:
+note: if network is empty, return all support network and token.
 
 | name    | type   | comment      | require |
 |---------|--------|--------------|---------|
