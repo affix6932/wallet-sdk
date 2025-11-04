@@ -26,6 +26,7 @@ func NewCommon(w *sdk.WalletClient, url string) Common {
 const (
 	queryExchangeRate = "/v1/api/exchange_rate"
 	queryCurrentBlock = "/v1/api/current_block"
+	queryGasFee       = "/v1/api/gasfee"
 )
 
 type QueryExchangeRateRequest struct {
@@ -43,7 +44,18 @@ type QueryCurrentBlockResponse struct {
 	Block int `json:"block"`
 }
 
-type Resp[T QueryExchangeRateResponse | QueryCurrentBlockResponse] struct {
+type QueryGasFeeRequest struct {
+	Network string `json:"network"`
+}
+
+type QueryGasFeeResponse struct {
+	Token    string          `json:"token"`
+	Network  string          `json:"network"`
+	Fee      decimal.Decimal `json:"fee"`
+	GasToken string          `json:"gas_token"`
+}
+
+type Resp[T QueryExchangeRateResponse | QueryCurrentBlockResponse | []*QueryGasFeeResponse] struct {
 	Data T      `json:"data"`
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
@@ -103,7 +115,35 @@ func (c *common) QueryCurrentBlock(ctx context.Context, network string) (*QueryC
 	return &resp.Data, nil
 }
 
-func buildReq[T *QueryExchangeRateRequest | *QueryCurrentBlockRequest](ctx context.Context, req T, baseUrl, router string) (*http.Request, error) {
+func (c *common) QueryGas(ctx context.Context, network string) ([]*QueryGasFeeResponse, error) {
+	req := &QueryGasFeeRequest{
+		Network: network,
+	}
+	r, err := buildReq(ctx, req, c.url, queryGasFee)
+	if err != nil {
+		return nil, err
+	}
+	body, err := c.w.Post(ctx, r)
+	if err != nil {
+		return nil, err
+	}
+
+	var tmp string
+	if err := json.Unmarshal(body, &tmp); err != nil {
+		return nil, err
+	}
+
+	var resp = &Resp[[]*QueryGasFeeResponse]{}
+	if err := json.Unmarshal([]byte(tmp), resp); err != nil {
+		return nil, err
+	}
+	if err = getErr(resp); err != nil {
+		return nil, err
+	}
+	return resp.Data, nil
+}
+
+func buildReq[T *QueryExchangeRateRequest | *QueryCurrentBlockRequest | *QueryGasFeeRequest](ctx context.Context, req T, baseUrl, router string) (*http.Request, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, err
@@ -116,7 +156,7 @@ func buildReq[T *QueryExchangeRateRequest | *QueryCurrentBlockRequest](ctx conte
 	return r, nil
 }
 
-func getErr[T QueryExchangeRateResponse | QueryCurrentBlockResponse](resp *Resp[T]) error {
+func getErr[T QueryExchangeRateResponse | QueryCurrentBlockResponse | []*QueryGasFeeResponse](resp *Resp[T]) error {
 	if resp.Code == 0 {
 		return nil
 	}
