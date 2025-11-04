@@ -444,7 +444,7 @@ If the setting is successful, it will take effect in one minute.
 
 ### Query Gas Fee by Network
 
-path: `/v1/api/deposit/set_deposit_min_limit`
+path: `/v1/api/gasfee`
 
 req:
 note: if network is empty, return all support network and token.
